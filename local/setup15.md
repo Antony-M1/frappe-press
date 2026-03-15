@@ -48,6 +48,7 @@ Get the right latest version of python-`3.10.x`
 pyenv install --list | grep 3.10
 ```
 
+![Pyenv Version Check](../media/pyenv_version_check.png)
 
 for me the latest listed in the `pyenv` **3.10.19** so im choosing that version
 
