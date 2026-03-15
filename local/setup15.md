@@ -36,9 +36,9 @@ Ignore the below step if its already installed
 ### Step 3: Setup Node
 install `nvm` & `yarn`
 ```sh
-nvm install v18
+nvm install v20
 npm install -g yarn
-nvm use v18
+nvm use v20
 ```
 
 ### Step 4: Setup python version
@@ -58,4 +58,58 @@ pyenv install 3.10.19
 pyenv global 3.10.19
 ```
 
+### Step 5: create bench
 
+use the installed new version of python here 
+```
+PYENV_VERSION=3.10.19 bench init --skip-redis-config-generation --frappe-branch version-15 frappe-bench
+```
+
+```sh
+cd frappe-bench
+```
+
+### Step 6: Setup hosts
+```
+bench set-config -g db_host mariadb
+bench set-config -g redis_cache redis://redis-cache:6379
+bench set-config -g redis_queue redis://redis-queue:6379
+bench set-config -g redis_socketio redis://redis-queue:6379
+```
+
+### Step 7: Create site
+```
+bench new-site --db-root-password 123 --admin-password admin --mariadb-user-host-login-scope=% press15.localhost
+```
+```
+bench use press15.localhost
+```
+
+```
+bench --site press15.localhost set-config developer_mode 1
+bench --site press15.localhost clear-cache
+```
+
+### Step 8: Install press
+
+```
+bench get-app press --resolve-deps
+```
+```
+bench install-app press
+```
+
+### Step 9: Migrate & Build
+
+```
+bench migrate
+```
+
+```
+bench build
+```
+
+### Step 10: Start
+```
+bench start
+```
